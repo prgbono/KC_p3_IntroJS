@@ -1,7 +1,7 @@
 {
   "name": "intro-js",
   "version": "1.0.0",
-  "description": "En este curso aprendermos a trabajar con JavaScript como lenguaje de programación.",
+  "description": "keepCoding bootCamp Web Ed X - Módulo 3 Intro a JS. Fco Ríos.",
   "main": "index.js",
   "directories": {
     "doc": "docs"
