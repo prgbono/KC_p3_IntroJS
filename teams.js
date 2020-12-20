@@ -1,11 +1,11 @@
-export const groupA = ['Sudáfrica', 'México', 'Uruguay', 'Francia'];
-export const groupB = ['Argentina', 'Corea del Sur', 'Nigeria', 'Grecia'];
-export const groupC = ['Inglaterra', 'Estados Unidos', 'Argelia', 'Eslovenia'];
-export const groupD = ['Alemania', 'Australia', 'Ghana', 'Serbia'];
-export const groupE = ['Holanda', 'Japón', 'Camerún', 'Dinamarca'];
-export const groupF = ['Italia', 'Nueva Zelanda', 'Paraguay', 'Eslovaquia'];
-export const groupG = ['Brasil', 'Corea del Norte', 'Costa de Marfil', 'Portugal'];
-export const groupH = ['España', 'Honduras', 'Chile', 'Suiza'];
+export const groupATeams = ['Sudáfrica', 'México', 'Uruguay', 'Francia'];
+export const groupBTeams = ['Argentina', 'Corea del Sur', 'Nigeria', 'Grecia'];
+export const groupCTeams = ['Inglaterra', 'Estados Unidos', 'Argelia', 'Eslovenia'];
+export const groupDTeams = ['Alemania', 'Australia', 'Ghana', 'Serbia'];
+export const groupETeams = ['Holanda', 'Japón', 'Camerún', 'Dinamarca'];
+export const groupFTeams = ['Italia', 'Nueva Zelanda', 'Paraguay', 'Eslovaquia'];
+export const groupGTeams = ['Brasil', 'Corea del Norte', 'Costa de Marfil', 'Portugal'];
+export const groupHTeams = ['España', 'Honduras', 'Chile', 'Suiza'];
   
 
 // export const liverPoolTeams = ['Liverpool', 'Everton']
