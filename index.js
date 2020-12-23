@@ -11,6 +11,11 @@ import { groupFTeams } from './teams.js'
 import { groupGTeams } from './teams.js'
 import { groupHTeams } from './teams.js'
 
+import { worldCupTeams } from './teams.js'
+console.log('worldCupTeams: ', worldCupTeams);
+console.log('worldCupTeams.groupBTeams: ', worldCupTeams.groupBTeams);
+
+
 const config = { rounds: 1 }
 
 // const premier = new FootballLeague('Premier League', premierLeagueTeams, config)
@@ -128,3 +133,6 @@ phaseGroupH.matchDaySchedule.forEach(matchDay => {
     i++
 })
 // TODO: Meter los phaseGroupX en un array para iterar sobre ellos y quitarte todas estas repeticiones de 8 veces cada una
+
+phaseGroupA.doWorldCupDraw(worldCupTeams);
+

@@ -1,4 +1,5 @@
 Array.prototype.shuffle = function()
+// desordena los elementos de un array de forma aleatoria.
 {
 	var i = this.length;
 	while (i)
@@ -177,5 +178,9 @@ export default class League {
             })
         })
         this.matchDaySchedule = this.matchDaySchedule.concat(secondRound)
+    }
+
+    doWorldCupDraw() {
+        throw new Error('doWorldCupDraw not implemented')
     }
 }
