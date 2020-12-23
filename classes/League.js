@@ -1,5 +1,11 @@
 Array.prototype.shuffle = function()
 // desordena los elementos de un array de forma aleatoria.
+/* IMPLEMENTACIÖN FUNCIONAL
+    * TB Se podría hacer así, funcionalmente: 
+    array.sort(function (a,b) {return 0.5 - Math.random()})
+    o lo que es lo mismo:
+    array.sort ((a,b) => 0.5 - Math.random())
+*/
 {
 	var i = this.length;
 	while (i)
