@@ -1,138 +1,85 @@
-// import FootballLeague from './classes/PointsBasedLeague.js'
-import PhaseGroup from './classes/PointsBasedLeague.js'
-
-// import { premierLeagueTeams } from './teams.js'
-import { groupATeams } from './teams.js';
-import { groupBTeams } from './teams.js'
-import { groupCTeams } from './teams.js'
-import { groupDTeams } from './teams.js'
-import { groupETeams } from './teams.js'
-import { groupFTeams } from './teams.js'
-import { groupGTeams } from './teams.js'
-import { groupHTeams } from './teams.js'
-
-import { worldCupTeams } from './teams.js'
-console.log('worldCupTeams: ', worldCupTeams);
-console.log('worldCupTeams.groupBTeams: ', worldCupTeams.groupBTeams);
+import { getTeamsFromGithub, getTeamsWithPromise } from './teams.js'
+import FootballLeague from './classes/PointsBasedLeague.js'
 
 
-const config = { rounds: 1 }
+try {
+    const teams = await getTeamsWithPromise()
+    const premierLeagueTeams = teams.map(club => club.name)
+    console.log('RESPONSE', premierLeagueTeams)
 
-// const premier = new FootballLeague('Premier League', premierLeagueTeams, config)
-const phaseGroupA = new PhaseGroup('Group A phase Group', groupATeams, config);
-const phaseGroupB = new PhaseGroup('Group B phase Group', groupBTeams, config);
-const phaseGroupC = new PhaseGroup('Group C phase Group', groupCTeams, config);
-const phaseGroupD = new PhaseGroup('Group D phase Group', groupDTeams, config);
-const phaseGroupE = new PhaseGroup('Group E phase Group', groupETeams, config);
-const phaseGroupF = new PhaseGroup('Group F phase Group', groupFTeams, config);
-const phaseGroupG = new PhaseGroup('Group G phase Group', groupGTeams, config);
-const phaseGroupH = new PhaseGroup('Group H phase Group', groupHTeams, config);
+    const config = { rounds: 2 }
+    const premier = new FootballLeague('Premier League', premierLeagueTeams, config)
 
+    const teamNames = premier.teams.map(team => team.name)
 
-// const teamNames = premier.teams.map(team => team.name)
-const groupATeamNames = phaseGroupA.teams.map(team => team.name);
-const groupBTeamNames = phaseGroupB.teams.map(team => team.name);
-const groupCTeamNames = phaseGroupC.teams.map(team => team.name);
-const groupDTeamNames = phaseGroupD.teams.map(team => team.name);
-const groupETeamNames = phaseGroupE.teams.map(team => team.name);
-const groupFTeamNames = phaseGroupF.teams.map(team => team.name);
-const groupGTeamNames = phaseGroupG.teams.map(team => team.name);
-const groupHTeamNames = phaseGroupH.teams.map(team => team.name);
-
-// groupHTeamNames.forEach(function(equipo) {
-//     console.log(equipo)
-// })
-
-// premier.scheduleMatchDays()
-phaseGroupA.scheduleMatchDays();
-phaseGroupB.scheduleMatchDays();
-phaseGroupC.scheduleMatchDays();
-phaseGroupD.scheduleMatchDays();
-phaseGroupE.scheduleMatchDays();
-phaseGroupF.scheduleMatchDays();
-phaseGroupG.scheduleMatchDays();
-phaseGroupH.scheduleMatchDays();
-
-let i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupA.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
+    teamNames.forEach(function(equipo) {
+        console.log(equipo)
     })
-    i++
-})
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupB.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
+    premier.scheduleMatchDays()
+
+    // Mostramos por pantala las jornadas y sus partidos
+    let i = 1
+    premier.matchDaySchedule.forEach(matchDay => {
+        console.log(`JORNADA ${i}`)
+        matchDay.forEach(match => {
+            const home = match[0] != null ? match[0] : 'DESCANSA'
+            const away = match[1] != null ? match[1] : 'DESCANSA'
+            console.log(`${home} vs ${away}`)
+        })
+        i++
     })
-    i++
-})
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupC.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
+
+    // Comenzamos la liga
+    premier.start()
+
+    // mostrar por pantalla los resultados de cada jornada y la clasificación
+    i = 1
+    premier.summaries.forEach(summary => {
+        console.log(`RESUMEN JORNADA ${i}`)
+        summary.results.forEach(result => {
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`)
+        })
+        console.table(summary.standings.map(team => {
+            return {
+                Team: team.name,
+                Points: team.points,
+                PlayedMatches: team.matchesWon + team.matchesDrawn + team.matchesLost,
+                Won: team.matchesWon,
+                Drawn: team.matchesDrawn,
+                Lost: team.matchesLost,
+                GoalsFor: team.goalsFor,
+                GoalsAgainst: team.goalsAgainst,
+                GoalsDiff: team.goalsFor - team.goalsAgainst
+            }
+        }))
+        i++
     })
-    i++
-})
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupD.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-})
 
-i= 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupE.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-})
+    // Mostramos el total de goles y el total de puntos
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupF.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-})
+    // For equivalente al reduce
+    // let goalsAccumulated = 0
+    // for (const team of teams) {
+    //    goalsAccumulated = goalsAccumulated + team.goalsFor
+    // }
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupG.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-})
+    //const totalGoals = premier.teams.reduce(function(goalsAccumulated, team) {
+    //    return goalsAccumulated + team.goalsFor
+    //}, 0)
 
-i = 1
-// premier.matchDaySchedule.forEach(matchDay => {
-phaseGroupH.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-})
-// TODO: Meter los phaseGroupX en un array para iterar sobre ellos y quitarte todas estas repeticiones de 8 veces cada una
+    const initialAccumulator = { totalGoals: 0, totalPoints: 0 }
+    const totals = premier.teams.reduce(function(accumulator, team) {
+        accumulator.totalGoals += team.goalsFor
+        accumulator.totalPoints += team.points
+        return accumulator
+    }, initialAccumulator)
 
-phaseGroupA.doWorldCupDraw(worldCupTeams);
+    console.log('TOTALS', totals)
+} catch (error) {
+    console.error('ERROR', error)
+}
+
 
