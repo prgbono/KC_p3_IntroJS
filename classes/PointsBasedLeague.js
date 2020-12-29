@@ -13,7 +13,8 @@ export default class PointsBasedLeague extends League {
             pointsPerDraw: 1,
             pointsPerLose: 0,
             teamsPerGroup: 4,
-            totalGroups: 8,
+            // totalGroups: 8,
+            groupsName: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         }
         this.config = Object.assign(defaultConfig, config)
     }
@@ -33,9 +34,14 @@ export default class PointsBasedLeague extends League {
         let i = 0;
 
         do {
-            groups.push(worldCupTeams.slice(parseInt(i * this.config.teamsPerGroup), parseInt((i+1) * this.config.teamsPerGroup)));
+            groups.push(
+                {
+                    ["group"+this.config.groupsName[i]] : 
+                    worldCupTeams.slice(parseInt(i * this.config.teamsPerGroup), parseInt((i+1) * this.config.teamsPerGroup))
+                }
+            );
             i++;
-        } while (i < this.config.totalGroups)
+        } while (i < this.config.groupsName.length)
 
         return groups;
     }

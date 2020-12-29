@@ -15,10 +15,13 @@ if (dev) {
 
     // Set groups
     const groups = worldCupGroupStage.setGroups(worldCupTeams);
+    console.log('groups from index: ', groups);
 
-
-    // const config = { rounds: 1 }
-    // const premier = new FootballLeague('Premier League', premierLeagueTeams, config)
+    const config = { rounds: 1 };
+    // for (let group of groups){
+    //     const 
+    // }
+    // const premier = new WorldCupGroupStage('Premier League', premierLeagueTeams, config)
     
 }
 else{
