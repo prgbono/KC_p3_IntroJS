@@ -1,4 +1,5 @@
 // Estas dos implementaciones tienen el mismo cometido. La inferior es lo que hace ASYNC-AWAIT.
+// Está grabado una muy buena explicación de Async-Await. HD.
 
 export async function getTeamsFromGitHub() {
   const url = "https://www.esta-es-una-url-API-de-json-files/clubs.json";
