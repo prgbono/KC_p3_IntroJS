@@ -1,27 +1,29 @@
 // import { getTeamsFromGithub, getTeamsWithPromise } from './teams.js'
-import { worldCupTeams } from './teams.js';
+import { worldCupTeams, setGroups, groupsName } from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/FootballWorldCup.js';
 
 const dev = true;
+console.clear();
+
+var clase;
 
 if (dev) {
     // const worldCup = new FootballWorldCup('World Cup Playoffs', 'Equipos del playOff');
     // const worldCupPlayOffs = new WorldCupPlayOffs();
-    const worldCupGroupStage = new WorldCupGroupStage();
+    // const worldCupGroupStage = new WorldCupGroupStage();
 
     // Shuffle teams for a new run
     worldCupTeams.sort ((a,b) => 0.5 - Math.random());
 
-    // Set groups
-    const groups = worldCupGroupStage.setGroups(worldCupTeams);
-    console.log('groups from index: ', groups);
-
+    // Set 8 groups of 4 teams each
     const config = { rounds: 1 };
-    // for (let group of groups){
-    //     const 
-    // }
-    // const premier = new WorldCupGroupStage('Premier League', premierLeagueTeams, config)
+    const groups = [];
+    setGroups(worldCupTeams, 8, 4).forEach((group, index) => {
+        groups.push(new WorldCupGroupStage('Grupo '+groupsName[index], group, config));
+    })
+
+    // premier.scheduleMatchDays()
     
 }
 else{
