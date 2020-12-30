@@ -31,22 +31,6 @@ export default class PointsBasedLeague extends League {
         }
     }
 
-    // setGroups(worldCupTeams){
-    //     const groups = [];
-    //     let i = 0;
-    //     do {
-    //         groups.push(
-    //             // {
-    //                 // ["group"+this.config.groupsName[i]] : 
-    //                 // [this.config.groupsName[i]] : 
-    //                 worldCupTeams.slice(parseInt(i * this.config.teamsPerGroup), parseInt((i+1) * this.config.teamsPerGroup))
-    //             // }
-    //         );
-    //         i++;
-    //     } while (i < this.config.groupsName.length)
-    //     return groups;
-    // }
-
     generateGoals() {
         return Math.round(Math.random() * 10)
     }

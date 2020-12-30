@@ -1,4 +1,3 @@
-// import { getTeamsFromGithub, getTeamsWithPromise } from './teams.js'
 import { worldCupTeams, setGroups, groupsName } from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/FootballWorldCup.js';
@@ -23,49 +22,30 @@ if (dev) {
         groups.push(new WorldCupGroupStage('Grupo '+groupsName[index], group, config));
     })
 
-    // premier.scheduleMatchDays()
-    
-}
-else{
-    // Código de Alberto
-    try {
-        const teams = await getTeamsWithPromise()
-        const premierLeagueTeams = teams.map(club => club.name)
-        console.log('RESPONSE', premierLeagueTeams)
-
-        const config = { rounds: 1 }
-        const premier = new FootballLeague('Premier League', premierLeagueTeams, config)
-
-        const teamNames = premier.teams.map(team => team.name)
-
-        teamNames.forEach(function(equipo) {
-            console.log(equipo)
-        })
-
-        premier.scheduleMatchDays()
-
+    groups.forEach((group, index) => {
+        // group.scheduleMatchDays2(); //TODO: scheduleMatchDays2 no tiene en cuenta config.rounds
+        group.scheduleMatchDays();
         // Mostramos por pantala las jornadas y sus partidos
-        let i = 1
-        premier.matchDaySchedule.forEach(matchDay => {
-            console.log(`JORNADA ${i}`)
-            matchDay.forEach(match => {
-                const home = match[0] != null ? match[0] : 'DESCANSA'
-                const away = match[1] != null ? match[1] : 'DESCANSA'
-                console.log(`${home} vs ${away}`)
-            })
-            i++
-        })
+        // let i = 1
+        // group.matchDaySchedule.forEach(matchDay => {
+        //     console.log(`JORNADA ${i}`);
+        //     matchDay.forEach(match => {
+        //         const home = match[0] != null ? match[0] : 'DESCANSA';
+        //         const away = match[1] != null ? match[1] : 'DESCANSA';
+        //         console.log(`${home} vs ${away}`);
+        //     })
+        //     i++;
+        // })
 
+        // TODO: Parar aquí para mostrar el calendario??
 
-        // Comenzamos la liga
-        premier.start();
-
+        group.start();
         // mostrar por pantalla los resultados de cada jornada y la clasificación
-        i = 1
-        premier.summaries.forEach(summary => {
-            console.log(`RESUMEN JORNADA ${i}`)
+        let i = 1;
+        group.summaries.forEach(summary => {
+            console.log(`GRUPO ${groupsName[index]} - RESUMEN JORNADA ${i}`);
             summary.results.forEach(result => {
-                console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`)
+                console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`);
             })
             console.table(summary.standings.map(team => {
                 return {
@@ -80,32 +60,32 @@ else{
                     GoalsDiff: team.goalsFor - team.goalsAgainst
                 }
             }))
-            i++
+            i++;
         })
 
-
         // Mostramos el total de goles y el total de puntos
-
-        // For equivalente al reduce
-        // let goalsAccumulated = 0
-        // for (const team of teams) {
-        //    goalsAccumulated = goalsAccumulated + team.goalsFor
-        // }
-
-        //const totalGoals = premier.teams.reduce(function(goalsAccumulated, team) {
-        //    return goalsAccumulated + team.goalsFor
-        //}, 0)
-
         const initialAccumulator = { totalGoals: 0, totalPoints: 0 }
-        const totals = premier.teams.reduce(function(accumulator, team) {
+        const totals = group.teams.reduce(function(accumulator, team) {
             accumulator.totalGoals += team.goalsFor
             accumulator.totalPoints += team.points
             return accumulator
         }, initialAccumulator)
 
         console.log('TOTALS', totals)
-    } catch (error) {
-        console.error('ERROR', error)
-    }
+        console.log('---------------')
+    })
+
+    // console.log('groups[0]: ', groups[0].summaries[0].results);
+    // console.log('groups[1]: ', groups[1].summaries[0].results);
+    // console.log('groups[2]: ', groups[2].summaries[0].results);
+    // console.log('groups[3]: ', groups[3].summaries[0].results);
+    // console.log('groups[4]: ', groups[4].summaries[0].results);
+    // console.log('groups[5]: ', groups[5].summaries[0].results);
+    // console.log('groups[6]: ', groups[6].summaries[0].results);
+    // console.log('groups[7]: ', groups[7].summaries[0].results);
+    // console.log('groups[0]: ', groups[0].summaries[0]);
+    
 }
 
+
+// Ir al standing de cada grupo y meter en el nextRoundTeam los dos primeros...

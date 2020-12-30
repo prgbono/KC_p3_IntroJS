@@ -169,6 +169,7 @@ export default class League {
         return newRound
     }
 
+    //FIXME: No tiene en cuenta config.round
     scheduleMatchDays2() {
         const newRound = this.createRound()
         const i = 1
