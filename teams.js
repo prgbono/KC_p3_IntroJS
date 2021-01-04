@@ -72,10 +72,18 @@ export function setGroups(teams, totalGroups, teamsPerGroup){
 
 export const groupsName = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-// export const europeTeams = [
-//     'España', 'Francia', 'Alemania', 'Inglaterra', 'Grecia', 'Eslovenia', 'Serbia', 'Holanda', 'Dinamarca', 'Italia', 'Eslovaquia', 'Portugal', 'Suiza'];
-// export const americaTeams = [
-//     'Estados Unidos', 'México', 'Uruguay', 'Argentina', 'Paraguay', 'Brasil', 'Honduras', 'Chile'];
-// export const asiaTeams = ['Corea del Sur', 'Japón', 'Corea del Norte'];
-// export const africaTeams = ['Sudáfrica', 'Nigeria', 'Argelia', 'Ghana', 'Camerún', 'Costa de Marfil'];
-// export const oceaniaTeams = ['Australia', 'Nueva Zelanda'];
+export const playOffTeams = [ 
+//   TODO: Pasarle a index un array con 32 equipos, y que desde index se llame a un método de PointsBasedLeague que se llamará doWorldCupDraw que retornará este objeto
+//   groupATeams : groupATeams,
+//   groupBTeams : groupBTeams,
+//   groupCTeams : groupCTeams,
+//   groupDTeams : groupDTeams,
+//   groupETeams : groupETeams,
+//   groupFTeams : groupFTeams,
+//   groupGTeams : groupGTeams,
+//   groupHTeams : groupHTeams
+  'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  'Portugal', 'España', 'Chile'
+]

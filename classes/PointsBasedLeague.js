@@ -36,8 +36,8 @@ export default class PointsBasedLeague extends League {
     }
 
     play(match) {
-        const homeGoals = this.generateGoals()
-        const awayGoals = this.generateGoals()
+        const homeGoals = this.generateGoals();
+        const awayGoals = this.generateGoals();
         return {
             homeTeam: match[LOCAL_TEAM],
             homeGoals,
@@ -98,5 +98,10 @@ export default class PointsBasedLeague extends League {
                }
             }
         })
+    }
+
+    playSimpleGame(){
+        const finalGame = ['Australia','New Zeland'];
+        const res = this.play(finalGame);
     }
 }
