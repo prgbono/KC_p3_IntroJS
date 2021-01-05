@@ -10,18 +10,18 @@ export default class FootballWorldCup extends League {
     constructor(name, teams=[]) {
         super(name, teams);
         this.name = name;
-        this.teams = teams;
+        this.teams = teams;        
     }
-
-    // constructor(teams=[]) {
-    //     this.teams = teams;
-    // }
-
+    
+    /* Prepare and show array of games of the current round
+    Returns am object: 
+        {currentRound: currentRound,
+        teams: [games_of_the_round]} 
+    */
     initRound(teams, round){
-        // Prepare and show array of games of the current Round
-        const currentRound = round === 16 ? 'Rounf of 16' : 
-            (round === 8 ? 'Quarter Final' : 
-            (round === 4 ?  'Semi Final' : 'Final'))
+        const currentRound = round === 16 ? 'ROUND OF 16' : 
+            (round === 8 ? 'QUARTER FINAL' : 
+            (round === 4 ?  'SEMI FINAL' : 'FINAL'))
         const square = [];
         let j = 0;
         for (let i=0; i < round; i=i+2) {
@@ -31,7 +31,8 @@ export default class FootballWorldCup extends League {
                 : console.log(`WORLD CUP FINAL: ${square[j][LOCAL_TEAM]} - ${square[j][AWAY_TEAM]}`);    
             j++;
         }
-        return square;
+        return {currentRound: currentRound,
+                teams: square};        
     }
 
     // playSimpleGame(){
@@ -47,7 +48,7 @@ export default class FootballWorldCup extends League {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
         if (homeGoals === awayGoals) {
-            console.log('Draw, it plays again');
+            // console.log('Draw, it plays again');
             return this.play(match);
         }
         else{
@@ -66,7 +67,7 @@ export default class FootballWorldCup extends League {
         let result;
         return round.map(game => {
             result = this.play(game);
-            console.log(`Game ${game} --- Score: ${result.homeGoals} - ${result.awayGoals}`);
+            console.log(`--- ${game[LOCAL_TEAM]} ${result.homeGoals} - ${result.awayGoals} ${game[AWAY_TEAM]} ---`);
             return result.homeGoals > result.awayGoals ? result.homeTeam : result.awayTeam;
         })
     }

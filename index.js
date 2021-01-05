@@ -68,19 +68,26 @@ if (dev) {
 console.log('=============================================== ');
 console.log('===== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
 console.log('===============================================');
-// TODO: usar currentRound para este mensaje informativo (ROund of 16, Quarter Finals...)
-console.log('===== OCTAVOS DE FINAL =====');
 
 const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, {});
 
 // Hacer emparejamientos y mostrarlos por pantalla
-const currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
+let currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
+// TODO: usar currentRound para este mensaje informativo (ROund of 16, Quarter Finals...)
+console.log(`===== ${currentRound.currentRound} - SCORES =====`);
+
 
 // Jugarlos y mostrar resultados
-const winners = worldCupPlayOffs.playRound(currentRound);
+let winners = worldCupPlayOffs.playRound(currentRound.teams);
 console.log('Winners: ', winners);
 
-// worldCupPlayOffs.initRound(winners, QUARTER_FINAL);
+console.log(`===== ${currentRound.currentRound} - SCORES =====`);
+currentRound = worldCupPlayOffs.initRound(winners, QUARTER_FINAL);
+winners = worldCupPlayOffs.playRound(currentRound.teams);
+console.log(`currentRound: ${currentRound.currentRound}`);
+console.log(`currentRound: ${currentRound.teams}`);
+console.log('Winners: ', winners);
+
 // worldCupPlayOffs.initRound(worldCupPlayOffs.teams, SEMI_FINAL);
 // worldCupPlayOffs.initRound(worldCupPlayOffs.teams, FINAL);
 
