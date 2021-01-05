@@ -5,6 +5,7 @@ import WorldCupPlayOffs, {ROUND_OF_16, QUARTER_FINAL, SEMI_FINAL, FINAL} from '.
 
 const dev = false;
 console.clear();
+const NUM_OF_PLAYOFFS =  4; // ROUND_OF_16, QUARTER_FINAL, SEMI_FINAL, FINAL
 
 if (dev) {
     // Shuffle teams for a new run
@@ -62,34 +63,47 @@ if (dev) {
 
     //TODO: Implementar el código para extraer los dos mejores equipos de cada grupo. 
     // Ahora mismo estos equipos están hardcodeados
+
+    // --- PLAYOFFS ---
+    console.log('=============================================== ');
+    console.log('===== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
+    console.log('===============================================');
+
+    // const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, NUM_OF_PLAYOFFS);
+
+    // TODO: Hacer aqui un bucle
+    // Hacer emparejamientos y mostrarlos por pantalla
+    let currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
+    console.log(`===== ${currentRound.currentRound} =====`);
+    let winners = worldCupPlayOffs.playRound(currentRound.teams);
+    console.log('Winners: ', winners);
+
+    currentRound = worldCupPlayOffs.initRound(winners, QUARTER_FINAL);
+    console.log(`===== ${currentRound.currentRound} =====`);
+    winners = worldCupPlayOffs.playRound(currentRound.teams);
+    console.log('Winners: ', winners);
+
+    currentRound = worldCupPlayOffs.initRound(winners, SEMI_FINAL);
+    console.log(`===== ${currentRound.currentRound} =====`);
+    winners = worldCupPlayOffs.playRound(currentRound.teams);
+
+    currentRound = worldCupPlayOffs.initRound(winners, FINAL);
+    console.log(`===== ${currentRound.currentRound} =====`);
+    winners = worldCupPlayOffs.playRound(currentRound.teams);
+
 }
 
-// --- PLAYOFFS ---
-console.log('=============================================== ');
-console.log('===== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
-console.log('===============================================');
 
-const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, {});
-
-// Hacer emparejamientos y mostrarlos por pantalla
-let currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
-// TODO: usar currentRound para este mensaje informativo (ROund of 16, Quarter Finals...)
-console.log(`===== ${currentRound.currentRound} - SCORES =====`);
+//TODO: Pasarle como tercer parámetro el número de rondas de PlayOffs
 
 
-// Jugarlos y mostrar resultados
-let winners = worldCupPlayOffs.playRound(currentRound.teams);
-console.log('Winners: ', winners);
+// ESTOY HACIENDO ESTA FUNCIÓN
+// const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, 18);
+// worldCupPlayOffs.getPlayOffRoundsNames();
 
-console.log(`===== ${currentRound.currentRound} - SCORES =====`);
-currentRound = worldCupPlayOffs.initRound(winners, QUARTER_FINAL);
-winners = worldCupPlayOffs.playRound(currentRound.teams);
-console.log(`currentRound: ${currentRound.currentRound}`);
-console.log(`currentRound: ${currentRound.teams}`);
-console.log('Winners: ', winners);
 
-// worldCupPlayOffs.initRound(worldCupPlayOffs.teams, SEMI_FINAL);
-// worldCupPlayOffs.initRound(worldCupPlayOffs.teams, FINAL);
+
+
 
 
 
