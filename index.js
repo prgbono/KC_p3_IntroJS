@@ -7,8 +7,6 @@ const dev = false;
 console.clear();
 
 if (dev) {
-    // const worldCupGroupStage = new WorldCupGroupStage();
-
     // Shuffle teams for a new run
     worldCupTeams.sort ((a,b) => 0.5 - Math.random());
 
@@ -20,19 +18,9 @@ if (dev) {
     })
 
     groups.forEach((group, index) => {
-        // group.scheduleMatchDays2(); //TODO: scheduleMatchDays2 no tiene en cuenta config.rounds
+        //FIXME: scheduleMatchDays2 no tiene en cuenta config.rounds
+        // group.scheduleMatchDays2(); 
         group.scheduleMatchDays();
-        // Mostramos por pantala las jornadas y sus partidos
-        // let i = 1
-        // group.matchDaySchedule.forEach(matchDay => {
-        //     console.log(`JORNADA ${i}`);
-        //     matchDay.forEach(match => {
-        //         const home = match[0] != null ? match[0] : 'DESCANSA';
-        //         const away = match[1] != null ? match[1] : 'DESCANSA';
-        //         console.log(`${home} vs ${away}`);
-        //     })
-        //     i++;
-        // })
 
         // TODO: Parar aquí para mostrar el calendario??
 
@@ -72,30 +60,29 @@ if (dev) {
         console.log('---------------')
     })
 
-    //TODO: Implementar el código para extraer los dos mejores equipos de cada grupo. Ahora mismo estos equipos están hardcodeados
+    //TODO: Implementar el código para extraer los dos mejores equipos de cada grupo. 
+    // Ahora mismo estos equipos están hardcodeados
 }
-// Ir al standing de cada grupo y meter en el nextRoundTeam los dos primeros...
 
 // --- PLAYOFFS ---
-// console.log('playOffTeams: ', playOffTeams);
-
 console.log('=============================================== ');
 console.log('===== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
 console.log('===============================================');
+// TODO: usar currentRound para este mensaje informativo (ROund of 16, Quarter Finals...)
 console.log('===== OCTAVOS DE FINAL =====');
 
 const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, {});
-// worldCupPlayOffs.playSimpleGame();
-// console.log(worldCupPlayOffs.teams)
 
 // Hacer emparejamientos y mostrarlos por pantalla
-// TODO: Meter el 16, 8, 4 y 2 de las rondas como constantes tal como están LOCAL_TEAM y AWAY_TEAM en la práctica
-worldCupPlayOffs.doDraw(worldCupPlayOffs.teams, ROUND_OF_16);
-// worldCupPlayOffs.doDraw(worldCupPlayOffs.teams, QUARTER_FINAL);
-// worldCupPlayOffs.doDraw(worldCupPlayOffs.teams, SEMI_FINAL);
-// worldCupPlayOffs.doDraw(worldCupPlayOffs.teams, FINAL);
+const currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
 
-// Jugarlos
+// Jugarlos y mostrar resultados
+const winners = worldCupPlayOffs.playRound(currentRound);
+console.log('Winners: ', winners);
 
-// Tratar los equipos que pasan
+// worldCupPlayOffs.initRound(winners, QUARTER_FINAL);
+// worldCupPlayOffs.initRound(worldCupPlayOffs.teams, SEMI_FINAL);
+// worldCupPlayOffs.initRound(worldCupPlayOffs.teams, FINAL);
+
+
 

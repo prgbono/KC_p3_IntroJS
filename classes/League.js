@@ -1,7 +1,7 @@
 Array.prototype.shuffle = function()
 // desordena los elementos de un array de forma aleatoria.
 /* IMPLEMENTACIÖN FUNCIONAL
-    * TB Se podría hacer así, funcionalmente: 
+    * TB Se podría hacer funcionalmente, así: 
     array.sort(function (a,b) {return 0.5 - Math.random()})
     o lo que es lo mismo:
     array.sort ((a,b) => 0.5 - Math.random())
@@ -86,8 +86,7 @@ export default class League {
         const maxHomeTeams = teamNames.length - 2
         let teamIndex = 0
         round.forEach(matchDay => { // por cada jornada
-            matchDay.forEach(match => { // por cada partido de cada jornada
-                // establecer el equipo local
+            matchDay.forEach(match => { // por cada partido de cada jornada establecer el equipo local
                 match[LOCAL_TEAM] = teamNames[teamIndex]
                 teamIndex++
                 if (teamIndex > maxHomeTeams) {
