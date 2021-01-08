@@ -13,10 +13,6 @@ export default class PointsBasedLeague extends League {
             pointsPerDraw: 1,
             pointsPerLose: 0,
             teamsPerGroup: 4,
-
-            // only for setting the groups
-            // totalGroups: 8,
-            // groupsName: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         }
         this.config = Object.assign(defaultConfig, config)
     }
@@ -100,8 +96,4 @@ export default class PointsBasedLeague extends League {
         })
     }
 
-    playSimpleGame(){
-        const finalGame = ['Australia','New Zeland'];
-        const res = this.play(finalGame);
-    }
 }

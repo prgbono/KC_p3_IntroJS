@@ -218,9 +218,5 @@ export default class League {
         throw new Error('play method not implented')
     }
 
-    // doWorldCupDraw() {
-    //     throw new Error('doWorldCupDraw not implemented')
-    // }
-
 }
 
