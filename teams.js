@@ -86,4 +86,39 @@ export const playOffTeams = [
   'Inglaterra', 'Alemania', 'Holanda', 'Japón',
   'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
   'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
+
+  // ,'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
+  // 'Inglaterra', 'Alemania', 'Holanda', 'Japón',
+  // 'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
+  // 'Portugal', 'España', 'Chile'
 ]

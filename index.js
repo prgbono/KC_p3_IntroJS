@@ -64,11 +64,6 @@ if (dev) {
     //TODO: Implementar el código para extraer los dos mejores equipos de cada grupo. 
     // Ahora mismo estos equipos están hardcodeados
 
-    // --- PLAYOFFS ---
-    console.log('=============================================== ');
-    console.log('===== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
-    console.log('===============================================');
-
     // const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, NUM_OF_PLAYOFFS);
 
     // TODO: Hacer aqui un bucle
@@ -94,12 +89,37 @@ if (dev) {
 }
 
 
-//TODO: Pasarle como tercer parámetro el número de rondas de PlayOffs
+// --- PLAYOFFS ---
+console.log('===============================================');
+console.log('==== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
 
+// const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, 4);
+const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
+const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
 
-// ESTOY HACIENDO ESTA FUNCIÓN
-// const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, 18);
-// worldCupPlayOffs.getPlayOffRoundsNames();
+let currentRoundDraw;
+// let currentRound = worldCupPlayOffs.initRound(worldCupPlayOffs.teams, ROUND_OF_16);
+// console.log('currentRound: ', currentRound);
+
+let winners = worldCupPlayOffs.teams;
+// console.log('winners: ', winners);
+
+for (let playOff of playOffs) {
+    // console.log('playOff: ', playOff);
+    currentRoundDraw = worldCupPlayOffs.initRound(winners, playOff.numberOfTeams);
+    // console.log('currentRoundDraw: ', currentRoundDraw);
+    
+    console.log('===============================================');
+    console.log(`===== ${playOff.name} =====`);
+    console.log('===============================================');
+    winners = worldCupPlayOffs.playRound(currentRoundDraw);
+    // console.log('Winners: ', winners);
+    if (winners.length === 1){
+        console.log(`===== WORLD CUP CHAMPION ---> ${winners} =====`);
+        console.log('===============================================');
+    }
+}
+
 
 
 
