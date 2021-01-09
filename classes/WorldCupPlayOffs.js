@@ -62,11 +62,24 @@ export default class WorldCupPlayOffs extends League {
 
     playRound(round){
         let result;
+        let winner;
         return round.map(game => {
             result = this.play(game);
-            console.log(`--- ${game[LOCAL_TEAM]} ${result.homeGoals} - ${result.awayGoals} ${game[AWAY_TEAM]} ---`);
-            return result.homeGoals > result.awayGoals ? result.homeTeam : result.awayTeam;
+            winner = result.homeGoals > result.awayGoals ? result.homeTeam : result.awayTeam; 
+            console.log(`${game[LOCAL_TEAM]} ${result.homeGoals} - ${result.awayGoals} ${game[AWAY_TEAM]} => ${winner}`);
+            return winner;
         })
+    }
+
+    tercerYcuartoPuesto(semifinals, final){
+        let aux = [];
+        semifinals.map(match => {
+            for (let team of match){
+                if (!final.includes(team)) aux.push(team);
+            }
+            return aux
+        })
+        return this.play(aux)
     }
 
 }
