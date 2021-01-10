@@ -96,4 +96,64 @@ export default class PointsBasedLeague extends League {
         })
     }
 
+    /* Get teams qualified of each group. 
+        1. More points
+        2. Equal Points -> the one who wins in their game
+        3. In case of drawn in the previous, alphabetic order.
+    */
+    getUpdatedStanding(summaries){
+        const groupPlayedStanding = summaries[2].standings;
+        return groupPlayedStanding.sort((teamA, teamB) => {
+            if (teamA.points > teamB.points) {return -1}
+            else if (teamA.points < teamB.points) {return 1}
+            else {
+                let directGame = this.getDirectGame(teamA, teamB, summaries).pop();
+                if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals > directGame.awayGoals)){
+                    return -1;
+                }
+                else if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals < directGame.awayGoals)) {
+                    return 1;
+                }
+                else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals > directGame.awayGoals)) {
+                    return 1;
+                }
+                else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals < directGame.awayGoals)) {
+                    return -1;
+                }
+                else {
+                    if (teamA.name < teamB.name) {
+                        return -1;
+                    }
+                    else if (teamA.name > teamB.name) {
+                        return 1;
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+            }
+        })
+    }
+
+    // TODO: Refactor. Not readable
+    getDirectGame(teamA, teamB, summaries){
+        return (summaries.map( groupMatchDay => {
+            return groupMatchDay.results.find(result => 
+                (result.homeTeam == teamA.name && result.awayTeam == teamB.name)
+                 || (result.homeTeam == teamB.name && result.awayTeam == teamA.name)
+            )
+        })).filter(item => {
+            return item != null;
+        });
+    }
+
+    getQualifiedTeams(summaries){
+        const updatedStanding = this.getUpdatedStanding(summaries);
+        let qualifiedTeams = [];
+        qualifiedTeams.push(updatedStanding[0].name);
+        qualifiedTeams.push(updatedStanding[1].name);
+        return qualifiedTeams;
+    }
+
+
 }
