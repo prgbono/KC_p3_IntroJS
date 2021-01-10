@@ -3,6 +3,8 @@ import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/WorldCupPlayOffs.js';
 import { summariesMock } from './mockData/mock.js'
 
+const TOTAL_GROUPS = 8;
+const TEAMS_PER_GROUP = 4;
 console.clear();
 let dev = false;
 
@@ -14,7 +16,7 @@ let dev = false;
     // Set 8 groups of 4 teams each
     const config = { rounds: 1 };
     const groups = [];
-    setGroups(worldCupTeams, 8, 4).forEach((group, index) => {
+    setGroups(worldCupTeams, TOTAL_GROUPS, TEAMS_PER_GROUP).forEach((group, index) => {
         groups.push(new WorldCupGroupStage('Grupo '+groupsName[index], group, config));
     })
 

@@ -1,14 +1,5 @@
 // import axios from 'axios'
 
-// export const liverPoolTeams = ['Liverpool', 'Everton']
-// export const manchesterTeams = ['Manchester City', 'Manchester United']
-// export const londonTeams = ['Arsenal', 'Chelsea', 'Fulham', 'West Ham', 'Tottenham', 'Crystal Palace']
-// export const premierLeagueTeams = [
-//     ...liverPoolTeams,
-//     ...manchesterTeams,
-//     ...londonTeams
-// ]
-
 // export async function getTeamsFromGithub() {
 //     const url = 'https://raw.githubusercontent.com/openfootball/football.json/master/2020-21/en.1.clubs.json'
 //     const response = await axios.get(url)
