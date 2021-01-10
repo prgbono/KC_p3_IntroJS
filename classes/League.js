@@ -218,6 +218,10 @@ export default class League {
         throw new Error('play method not implented')
     }
 
+    generateGoals() {
+        return Math.round(Math.random() * 10)
+    }
+    
     // getTeamsQualified(){
     //     throw new Error('getTeamsQualified method not implented')
     // }

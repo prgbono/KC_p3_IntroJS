@@ -27,10 +27,6 @@ export default class PointsBasedLeague extends League {
         }
     }
 
-    generateGoals() {
-        return Math.round(Math.random() * 10)
-    }
-
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();

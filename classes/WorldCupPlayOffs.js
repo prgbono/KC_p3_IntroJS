@@ -40,10 +40,6 @@ export default class WorldCupPlayOffs extends League {
         return square;
     }
 
-    generateGoals() {
-        return Math.round(Math.random() * 10);
-    }
-
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
