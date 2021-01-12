@@ -1,34 +1,35 @@
-import { worldCupTeams, setGroups, groupsName, playOffTeamsMock } from './teams.js';
+import { setGroups, groupsName, getCountriesFromAPI} from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/WorldCupPlayOffs.js';
-import { summariesMock } from './mockData/mock.js'
 
+const TOTAL_TEAMS = 32;
 const TOTAL_GROUPS = 8;
 const TEAMS_PER_GROUP = 4;
+
+const worldCupTeams = [];
+const groups = [];
+let playOffTeams = [];
+const config = { rounds: 1 };
 console.clear();
-let dev = false;
 
-// if (dev){
-
-    // Shuffle teams for a new run
-    worldCupTeams.sort ((a,b) => 0.5 - Math.random());
-
+try {
+    const countries = await getCountriesFromAPI();
+    const countryNames = countries.map(country => country.name);
+    countryNames.sort ((a,b) => 0.5 - Math.random());
+    for (let i=0; i<TOTAL_TEAMS; i++){
+        worldCupTeams.push(countryNames[i]);
+    }
+    
     // Set 8 groups of 4 teams each
-    const config = { rounds: 1 };
-    const groups = [];
     setGroups(worldCupTeams, TOTAL_GROUPS, TEAMS_PER_GROUP).forEach((group, index) => {
         groups.push(new WorldCupGroupStage('Grupo '+groupsName[index], group, config));
     })
-
+    
     console.log('---- COMIENZA EL TORNEO ----');
     console.log('----------------------------');
-    let playOffTeams = [];
 
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
-        
-        // TODO: Parar aquí para mostrar el calendario??
-
         group.start();
         // mostrar por pantalla los resultados de cada jornada y la clasificación
         let i = 1;
@@ -53,7 +54,7 @@ let dev = false;
             i++;
         })
 
-        // Mostramos el total de goles y el total de puntos
+        // Mostramos los acumulados (goles y puntos)
         const initialAccumulator = { totalGoals: 0, totalPoints: 0 }
         const totals = group.teams.reduce(function(accumulator, team) {
             accumulator.totalGoals += team.goalsFor
@@ -64,21 +65,16 @@ let dev = false;
         console.log('TOTALS', totals)
         console.log('---------------')
 
-        
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams(group.summaries));
-
     })
 
     // --- PLAYOFFS ---
     console.log('===============================================');
     console.log('==== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
 
-    // TODO: ojo con llevar el mock de playOffTeams
-    // const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeamsMock);
     const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
     const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
     let winners = worldCupPlayOffs.teams;
-
     for (let playOff of playOffs) {
         let currentRoundDraw;
         currentRoundDraw = worldCupPlayOffs.RoundDraw(winners, playOff.numberOfTeams);
@@ -100,13 +96,11 @@ let dev = false;
             console.log(`===== CAMPEÓN DEL MUNDO ---> ${winners.map(team => team.toUpperCase())} ======`);
             console.log('===============================================');
         }
-    }
-// }
-
-
-// const grupo = new WorldCupGroupStage('Grupo TEST', ['Nueva Zelanda', 'Japón', 'Francia', 'Ghana'], { rounds: 1 });
-// console.log('newStanding: ',grupo.getTeamsQualified(summariesMock));
-// grupo.getTeamsQualified(summariesMock);
+    } 
+}
+catch(e){
+    console.error('ERROR', e)
+}
 
 
 
