@@ -1,6 +1,7 @@
 import { setGroups, groupsName, getCountriesFromAPI} from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/WorldCupPlayOffs.js';
+import {summariesMock} from './mockData/mock.js'
 
 const TOTAL_TEAMS = 32;
 const TOTAL_GROUPS = 8;
@@ -11,6 +12,8 @@ const groups = [];
 let playOffTeams = [];
 const config = { rounds: 1 };
 console.clear();
+
+const dev = true;
 
 try {
     const countries = await getCountriesFromAPI();
@@ -27,6 +30,7 @@ try {
     
     console.log('---- COMIENZA EL TORNEO ----');
     console.log('----------------------------');
+if (dev){  
 
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
@@ -75,6 +79,8 @@ try {
     const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
     const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
     let winners = worldCupPlayOffs.teams;
+
+  
     for (let playOff of playOffs) {
         let currentRoundDraw;
         currentRoundDraw = worldCupPlayOffs.RoundDraw(winners, playOff.numberOfTeams);
@@ -97,13 +103,18 @@ try {
             console.log('===============================================');
         }
     } 
+} // LLAVE DEL DEV, NO IDENTAR!!!
 }
 catch(e){
     console.error('ERROR', e)
 }
 
 
+// Testear getUpdatedStanding
+// const grupo = new WorldCupGroupStage('Grupo TEST', ['Nueva Zelanda', 'Japón', 'Francia', 'Ghana'], { rounds: 1 });
+// console.log('newStanding: ',grupo.getUpdatedStanding(summariesMock));
 
+//TODO: LAs calificaciones mostradas son las correctas con esos criterios de calificación?
 
 
 
