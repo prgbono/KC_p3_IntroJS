@@ -114,7 +114,7 @@ catch(e){
 // const grupo = new WorldCupGroupStage('Grupo TEST', ['Nueva Zelanda', 'Japón', 'Francia', 'Ghana'], { rounds: 1 });
 // console.log('newStanding: ',grupo.getUpdatedStanding(summariesMock));
 
-//TODO: LAs calificaciones mostradas son las correctas con esos criterios de calificación?
+//TODO: LAs calificaciones mostradas son las correctas con esos criterios de calificación. No, hay que mostrarlas tras hacer el getQualifiedTeams
 
 
 
