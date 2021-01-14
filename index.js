@@ -13,8 +13,6 @@ let playOffTeams = [];
 const config = { rounds: 1 };
 console.clear();
 
-// const dev = true;
-
 try {
     const countries = await getCountriesFromAPI();
     const countryNames = countries.map(country => country.name);
@@ -30,8 +28,6 @@ try {
     
     console.log('---- COMIENZA EL TORNEO ----');
     console.log('----------------------------');
-
-// if (dev){  
 
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
@@ -70,11 +66,9 @@ try {
         console.log('TOTALS', totals)
         console.log('---------------')
 
-        // TODO: Ojo con el método getQualifiedTeams CANCELADO DE MOMENTO
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
-        console.log(`Index: ${index} - playOffTeams: , ${playOffTeams}`);
-        
     })
+    
 
     // --- PLAYOFFS ---
     console.log('===============================================');
@@ -82,17 +76,15 @@ try {
 
     const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
     const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
+    
     let winners = worldCupPlayOffs.teams;
-
   
     for (let playOff of playOffs) {
         let currentRoundDraw;
-        currentRoundDraw = worldCupPlayOffs.RoundDraw(winners, playOff.numberOfTeams);
-
+        currentRoundDraw = worldCupPlayOffs.roundDraw(winners, playOff.name);
         console.log('===============================================');
         console.log(`===== ${playOff.name} =====`);
         console.log('===============================================');
-
         winners = worldCupPlayOffs.playRound(currentRoundDraw);
         
         if (currentRoundDraw.length == 2) {
@@ -107,11 +99,15 @@ try {
             console.log('===============================================');
         }
     } 
-// } //LLAVE DEL DEV, NO IDENTAR!!!
 }
 catch(e){
     console.error('ERROR', e)
+
 }
+
+
+
+
 
 
 

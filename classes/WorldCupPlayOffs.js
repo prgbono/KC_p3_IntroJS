@@ -15,7 +15,7 @@ export default class WorldCupPlayOffs extends League {
             do {
                 playOffRounds.push({
                     name: teamsOftheRound > 8 
-                            ? 'Round of ' + teamsOftheRound
+                            ? 'ROUND OF ' + teamsOftheRound
                             : (teamsOftheRound == 8 
                                 ? 'QUARTER FINALS'
                                 : (teamsOftheRound == 4 
@@ -29,15 +29,52 @@ export default class WorldCupPlayOffs extends League {
         }
     }
 
-    // Prepare and show array of games of the current round.
-    RoundDraw(teams, round){
+    /* Prepare all playOff games so that:
+        1. 1A Vs 2B, 1B Vs 2A, etc
+        2. Two teams in the same group cannot couldn't play again each other until the final.
+    */
+    roundDraw(teams, roundName){
         const square = [];
-        let j = 0;
-        for (let i=0; i < round; i=i+2) {
-            square.push([teams[i], teams[i+1]]);
-            j++;
+        switch (roundName) {
+            case 'ROUND OF 16':
+                square.push([teams[0], teams[3]]);
+                square.push([teams[1], teams[2]]);
+                square.push([teams[4], teams[7]]);
+                square.push([teams[5], teams[6]]);
+                square.push([teams[8], teams[11]]);
+                square.push([teams[9], teams[10]]);
+                square.push([teams[12], teams[15]]);
+                square.push([teams[13], teams[14]]);
+                break;
+            case 'QUARTER FINALS':
+                square.push([teams[0], teams[2]]);
+                square.push([teams[1], teams[3]]);
+                square.push([teams[4], teams[6]]);
+                square.push([teams[5], teams[7]]);
+                break;
+            case 'SEMI FINALS':
+                square.push([teams[0], teams[2]]);
+                square.push([teams[1], teams[3]]);
+                break;
+            case 'FINAL':
+                square.push([teams[0], teams[1]]);
+                break;
+            default:
+                // TODO: Prepare for more than 16 teams
+                break;
         }
         return square;
+    }
+
+    playRound(round){
+        let result;
+        let winner;
+        return round.map(game => {
+            result = this.play(game);
+            winner = result.homeGoals > result.awayGoals ? result.homeTeam : result.awayTeam; 
+            console.log(`${game[LOCAL_TEAM]} ${result.homeGoals} - ${result.awayGoals} ${game[AWAY_TEAM]} => ${winner}`);
+            return winner;
+        })
     }
 
     play(match) {
@@ -54,17 +91,6 @@ export default class WorldCupPlayOffs extends League {
                 awayGoals
             }
         }   
-    }
-
-    playRound(round){
-        let result;
-        let winner;
-        return round.map(game => {
-            result = this.play(game);
-            winner = result.homeGoals > result.awayGoals ? result.homeTeam : result.awayTeam; 
-            console.log(`${game[LOCAL_TEAM]} ${result.homeGoals} - ${result.awayGoals} ${game[AWAY_TEAM]} => ${winner}`);
-            return winner;
-        })
     }
 
     tercerYcuartoPuesto(semifinals, final){
