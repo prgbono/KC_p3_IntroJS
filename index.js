@@ -20,6 +20,8 @@ try {
     for (let i=0; i<TOTAL_TEAMS; i++){
         worldCupTeams.push(countryNames[i]);
     }
+
+    // TODO: comprobar que esté Spain entre los equipos participantes
     
     // Set 8 groups of 4 teams each
     setGroups(worldCupTeams, TOTAL_GROUPS, TEAMS_PER_GROUP).forEach((group, index) => {
@@ -33,7 +35,6 @@ try {
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
         
-        // TODO: Refactorizar en un método
         // mostrar por pantalla los partidos y resultados de cada jornada y la clasificación
         console.log(`GROUP ${groupsName[index]}:`);
         console.log('-----------------');

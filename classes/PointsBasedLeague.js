@@ -30,6 +30,7 @@ export default class PointsBasedLeague extends League {
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
+        // TODO: check Spain. Desactivar si no eres patriota
         return {
             homeTeam: match[LOCAL_TEAM],
             homeGoals,

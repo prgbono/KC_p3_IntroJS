@@ -31,7 +31,6 @@ export const worldCupTeamsMock = [
 ]
 
 export const playOffTeamsMock = [ 
-//   TODO: Pasarle a index un array con 32 equipos, y que desde index se llame a un método de PointsBasedLeague que se llamará doWorldCupDraw que retornará este objeto
   'Sudáfrica', 'México', 'Uruguay', 'Francia', 'Argentina', 
   'Inglaterra', 'Alemania', 'Holanda', 'Japón',
   'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
