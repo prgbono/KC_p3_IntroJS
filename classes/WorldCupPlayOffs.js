@@ -29,7 +29,7 @@ export default class WorldCupPlayOffs extends League {
         }
     }
 
-    /* Prepare all playOff games so that:
+    /* Prepare all playOff square of games so that:
         1. 1A Vs 2B, 1B Vs 2A, etc
         2. Two teams in the same group cannot couldn't play again each other until the final.
     */

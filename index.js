@@ -1,7 +1,7 @@
-import { setGroups, groupsName, getCountriesFromAPI} from './teams.js';
+import { setGroups, groupsName, getCountriesFromAPI } from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/WorldCupPlayOffs.js';
-import {summariesMock} from './mockData/mock.js'
+import { LOCAL_TEAM, AWAY_TEAM } from './classes/League.js'
 
 const TOTAL_TEAMS = 32;
 const TOTAL_GROUPS = 8;
@@ -25,19 +25,47 @@ try {
     setGroups(worldCupTeams, TOTAL_GROUPS, TEAMS_PER_GROUP).forEach((group, index) => {
         groups.push(new WorldCupGroupStage('Grupo '+groupsName[index], group, config));
     })
-    
-    console.log('---- COMIENZA EL TORNEO ----');
-    console.log('----------------------------');
 
+    console.log('  - GROUPS & TEAMS -   ');
+    console.log('========================');
+    console.log('\r');
+    
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
+        
+        // TODO: Refactorizar en un método
+        // mostrar por pantalla los partidos y resultados de cada jornada y la clasificación
+        console.log(`GROUP ${groupsName[index]}:`);
+        console.log('-----------------');
+        group.teams.map(team => {
+            console.log(team.name);
+        })
+        console.log('___________________');
+        console.log(`GRUPO ${groupsName[index]} - Schedule:`);
+        let i = 1;
+        group.matchDaySchedule.forEach(matchDaySchedule => {
+            console.log(`   Match Day ${i}`);
+            matchDaySchedule.map(matchday => {
+                console.log(`       ${matchday[LOCAL_TEAM]} - ${matchday[AWAY_TEAM]}`)
+            });
+            i++;
+        })
+        console.log('\r\n');
         group.start();
+    })
+
+    console.log('===============================================');
+    console.log('-------------- WORLD CUP STARTS! --------------');
+    console.log('===============================================');
+    console.log('\r\n');
+
+    groups.forEach((group, index) => { 
         // mostrar por pantalla los resultados de cada jornada y la clasificación
         let i = 1;
         group.summaries.forEach(summary => {
-            console.log(`GRUPO ${groupsName[index]} - RESUMEN JORNADA ${i}`);
+            console.log(`GROUP ${groupsName[index]} - Match Day ${i} Summary`);
             summary.results.forEach(result => {
-                console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`);
+                console.log(`   ${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`);
             })
             console.table(summary.standings.map(team => {
                 return {
@@ -65,44 +93,41 @@ try {
 
         console.log('TOTALS', totals)
         console.log('---------------')
+        console.log('\r');
 
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
     })
-    
 
     // --- PLAYOFFS ---
     console.log('===============================================');
-    console.log('==== COMIENZO DE LA FASE DE ELIMINATORIAS =====');
+    console.log('---------------- PLAYOFFS START ---------------');
+    console.log('===============================================');
 
     const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
     const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
-    
     let winners = worldCupPlayOffs.teams;
   
     for (let playOff of playOffs) {
         let currentRoundDraw;
         currentRoundDraw = worldCupPlayOffs.roundDraw(winners, playOff.name);
-        console.log('===============================================');
+        console.log('\r\n');
         console.log(`===== ${playOff.name} =====`);
-        console.log('===============================================');
         winners = worldCupPlayOffs.playRound(currentRoundDraw);
         
         if (currentRoundDraw.length == 2) {
             const results3And4th = worldCupPlayOffs.tercerYcuartoPuesto(currentRoundDraw, winners);
-            console.log('===============================================');
-            console.log(`===== TERCER Y CUARTO PUESTO =====`);
+            console.log('\r\n');
+            console.log(`===== THIRD and FOURTH PLACE =====`);
             console.log(`${results3And4th.homeTeam} ${results3And4th.homeGoals} - ${results3And4th.awayGoals} ${results3And4th.awayTeam}`);
         }
 
         if (winners.length === 1){
-            console.log(`===== CAMPEÓN DEL MUNDO ---> ${winners.map(team => team.toUpperCase())} ======`);
-            console.log('===============================================');
+            console.log(`---> ${winners.map(team => team.toUpperCase())} <--- IS THE NEW WORLD CHAMPION!!!`);
         }
     } 
 }
 catch(e){
     console.error('ERROR', e)
-
 }
 
 
