@@ -72,74 +72,69 @@ export default class PointsBasedLeague extends League {
         }
     }
 
-    getStandings() {
-        this.teams.sort(function(teamA, teamB) {
-            if (teamA.points > teamB.points) {
-                return -1
-            } else if (teamA.points < teamB.points) {
-                return 1
-            } else { // empatan a puntosç
-               const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
-               const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
-               if (goalsDiffA > goalsDiffB) {
-                   return -1
-               } else if (goalsDiffA < goalsDiffB) {
-                   return 1
-               } else {
-                   return 0
-               }
-            }
-        })
-    }
 
-    
     /* Get teams qualified of each group. 
         1. More points
         2. Equal Points -> the one who wins in their direct one against one game
         3. Drawn in previous step. See goals diff.
         4. In case of drawn in the previous, alphabetic order.
     */
-    getUpdatedStanding(summaries){
-        const groupPlayedStanding = summaries[2].standings;
-        return groupPlayedStanding.sort((teamA, teamB) => {
-            if (teamA.points > teamB.points) {return -1} 
-            else if (teamA.points < teamB.points) {return 1} 
+    //FIXME: Doesn't work properly in case of more than 2 teams drawn      
+    getStandings() {
+        this.teams.sort((teamA, teamB) => {
+            if (teamA.points > teamB.points) {
+                return -1
+            } else if (teamA.points < teamB.points) {
+                return 1
+            } 
             else {
-                let directGame = this.getDirectGame(teamA, teamB, summaries).pop();
-                if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals > directGame.awayGoals)){
-                    return -1; 
-                }
-                else if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals < directGame.awayGoals)) { 
-                    return 1;
-                }
-                else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals > directGame.awayGoals)) {
-                    return 1;
-                }
-                else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals < directGame.awayGoals)) {
-                    return -1;
-                }
-                else { 
-                    const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst;
-                    const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst;
-                    if (goalsDiffA > goalsDiffB) {
-                        return -1
-                    } else if (goalsDiffA < goalsDiffB) {
-                        return 1
-                    } 
-                    else {
-                        if (teamA.name < teamB.name) {
-                            return -1;
-                        }
-                        else if (teamA.name > teamB.name) {
-                            return 1;
-                        }
-                        else {
-                            return 0;
-                        }
+                let directGame = this.getDirectGame(teamA, teamB, this.summaries);
+                if (directGame.length == 1){ //Se ha jugado enfrentamiento directo
+                    directGame = directGame[0];
+                    if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals > directGame.awayGoals)){
+                        return -1; 
                     }
+                    else if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals < directGame.awayGoals)) { 
+                        return 1;
+                    }
+                    else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals > directGame.awayGoals)) {
+                        return 1;
+                    }
+                    else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals < directGame.awayGoals)) {
+                        return -1;
+                    }
+                    //Hay que contemplar el caso que se haya jugado el enfrentamiento directo y continúen igual de empatados
+                    else {
+                        return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
+                    }
+                }
+                // caso que no se haya jugado el enfrentaminto directo
+                else {
+                    return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
                 }
             }
         })
+    }
+
+    diffGoalsAndAlphabeticCriteria(teamA, teamB) { 
+        const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst;
+        const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst;
+        if (goalsDiffA > goalsDiffB) {
+            return -1
+        } else if (goalsDiffA < goalsDiffB) {
+            return 1
+        } 
+        else {
+            if (teamA.name < teamB.name) {
+                return -1;
+            }
+            else if (teamA.name > teamB.name) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
     }
 
     // TODO: Refactor. Not readable
@@ -149,20 +144,17 @@ export default class PointsBasedLeague extends League {
                 (result.homeTeam == teamA.name && result.awayTeam == teamB.name)
                  || (result.homeTeam == teamB.name && result.awayTeam == teamA.name)
             )
-        })).filter(item => {
+        }))
+        .filter(item => {
             return item != null;
         });
     }
+    
 
-    getQualifiedTeams(summaries){
-        const updatedStanding = this.getUpdatedStanding(summaries);
+    getQualifiedTeams(){
         let qualifiedTeams = [];
-        qualifiedTeams.push(updatedStanding[0].name);
-        qualifiedTeams.push(updatedStanding[1].name);
-        console.log('qualifiedTeams: ', qualifiedTeams);
-        
+        qualifiedTeams.push(this.teams[0].name);
+        qualifiedTeams.push(this.teams[1].name);
         return qualifiedTeams;
     }
-
-
 }

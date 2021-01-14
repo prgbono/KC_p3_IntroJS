@@ -13,7 +13,7 @@ let playOffTeams = [];
 const config = { rounds: 1 };
 console.clear();
 
-const dev = true;
+// const dev = true;
 
 try {
     const countries = await getCountriesFromAPI();
@@ -30,7 +30,8 @@ try {
     
     console.log('---- COMIENZA EL TORNEO ----');
     console.log('----------------------------');
-if (dev){  
+
+// if (dev){  
 
     groups.forEach((group, index) => { 
         group.scheduleMatchDays();
@@ -69,7 +70,10 @@ if (dev){
         console.log('TOTALS', totals)
         console.log('---------------')
 
-        playOffTeams = playOffTeams.concat(group.getQualifiedTeams(group.summaries));
+        // TODO: Ojo con el método getQualifiedTeams CANCELADO DE MOMENTO
+        playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
+        console.log(`Index: ${index} - playOffTeams: , ${playOffTeams}`);
+        
     })
 
     // --- PLAYOFFS ---
@@ -103,18 +107,11 @@ if (dev){
             console.log('===============================================');
         }
     } 
-} // LLAVE DEL DEV, NO IDENTAR!!!
+// } //LLAVE DEL DEV, NO IDENTAR!!!
 }
 catch(e){
     console.error('ERROR', e)
 }
-
-
-// Testear getUpdatedStanding
-// const grupo = new WorldCupGroupStage('Grupo TEST', ['Nueva Zelanda', 'Japón', 'Francia', 'Ghana'], { rounds: 1 });
-// console.log('newStanding: ',grupo.getUpdatedStanding(summariesMock));
-
-//TODO: LAs calificaciones mostradas son las correctas con esos criterios de calificación. No, hay que mostrarlas tras hacer el getQualifiedTeams
 
 
 
