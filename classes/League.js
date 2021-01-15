@@ -32,7 +32,7 @@ export default class League {
     }
 
     setup(config) {
-        const defaultConfig = { rounds: 1 }
+        const defaultConfig = { rounds: 1, eresPatriota: true }
         this.config = Object.assign(defaultConfig, config)
     }
 
@@ -221,10 +221,11 @@ export default class League {
     generateGoals() {
         return Math.round(Math.random() * 10)
     }
-    
-    // getTeamsQualified(){
-    //     throw new Error('getTeamsQualified method not implented')
-    // }
+
+    spainWins(match, homeGoals, awayGoals){
+        return (match[LOCAL_TEAM] === 'Spain') && (homeGoals > awayGoals)
+            || (match[AWAY_TEAM] === 'Spain') && (homeGoals < awayGoals)
+    }
 
 }
 

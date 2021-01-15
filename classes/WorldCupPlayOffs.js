@@ -1,8 +1,8 @@
 import League from './League.js'
 import { LOCAL_TEAM, AWAY_TEAM } from './League.js';
 export default class WorldCupPlayOffs extends League {
-    constructor(name, teams=[]) {
-        super(name);
+    constructor(name, teams=[], config={}) {
+        super(name, teams, config)
         this.teams = teams;
     }
 
@@ -80,11 +80,17 @@ export default class WorldCupPlayOffs extends League {
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
-        // TODO: check Spain
         if (homeGoals === awayGoals) {
             return this.play(match);
         }
         else{
+            if (this.config.eresPatriota) {
+                if (match.includes('Spain')) {
+                    if (!this.spainWins(match, homeGoals, awayGoals)){
+                        return this.play(match)
+                    }
+                }
+            }
             return {
                 homeTeam: match[LOCAL_TEAM],
                 homeGoals,

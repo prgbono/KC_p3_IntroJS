@@ -30,7 +30,14 @@ export default class PointsBasedLeague extends League {
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
-        // TODO: check Spain. Desactivar si no eres patriota
+        
+        if (this.config.eresPatriota) {
+            if (match.includes('Spain')) {
+                if (!this.spainWins(match, homeGoals, awayGoals)){
+                    return this.play(match)
+                }
+            }
+        }
         return {
             homeTeam: match[LOCAL_TEAM],
             homeGoals,
@@ -74,7 +81,7 @@ export default class PointsBasedLeague extends League {
     }
 
 
-    /* Get teams qualified of each group. 
+    /* Get teams qualified of each group. Criteria:
         1. More points
         2. Equal Points -> the one who wins in their direct one against one game
         3. Drawn in previous step. See goals diff.

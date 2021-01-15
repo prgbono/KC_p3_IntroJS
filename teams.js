@@ -36,3 +36,8 @@ export const playOffTeamsMock = [
   'Dinamarca', 'Italia', 'Paraguay', 'Brasil', 
   'Portugal', 'España', 'Chile'
 ]
+
+export function spainInParticipants(worldCupTeams){
+    if (!worldCupTeams.includes('Spain')) worldCupTeams[0] = 'Spain';
+    return worldCupTeams;
+}

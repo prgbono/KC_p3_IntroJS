@@ -1,4 +1,4 @@
-import { setGroups, groupsName, getCountriesFromAPI } from './teams.js';
+import { setGroups, groupsName, getCountriesFromAPI, spainInParticipants } from './teams.js';
 import WorldCupGroupStage from './classes/PointsBasedLeague.js';
 import WorldCupPlayOffs from './classes/WorldCupPlayOffs.js';
 import { LOCAL_TEAM, AWAY_TEAM } from './classes/League.js'
@@ -7,11 +7,13 @@ const TOTAL_TEAMS = 32;
 const TOTAL_GROUPS = 8;
 const TEAMS_PER_GROUP = 4;
 
-const worldCupTeams = [];
+let worldCupTeams = [];
 const groups = [];
 let playOffTeams = [];
-const config = { rounds: 1 };
+const config = { rounds: 1, eresPatriota: true };
 console.clear();
+
+let dev = false;
 
 try {
     const countries = await getCountriesFromAPI();
@@ -21,7 +23,9 @@ try {
         worldCupTeams.push(countryNames[i]);
     }
 
-    // TODO: comprobar que esté Spain entre los equipos participantes
+    if (config.eresPatriota) {
+        worldCupTeams = spainInParticipants(worldCupTeams);
+    }
     
     // Set 8 groups of 4 teams each
     setGroups(worldCupTeams, TOTAL_GROUPS, TEAMS_PER_GROUP).forEach((group, index) => {
@@ -99,12 +103,12 @@ try {
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
     })
 
-    // --- PLAYOFFS ---
+
     console.log('===============================================');
     console.log('---------------- PLAYOFFS START ---------------');
     console.log('===============================================');
 
-    const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams);
+    const worldCupPlayOffs = new WorldCupPlayOffs('World Cup PlayOffs', playOffTeams, config);
     const playOffs = worldCupPlayOffs.getPlayOffRoundsInfo();
     let winners = worldCupPlayOffs.teams;
   
@@ -126,6 +130,7 @@ try {
             console.log(`---> ${winners.map(team => team.toUpperCase())} <--- IS THE NEW WORLD CHAMPION!!!`);
         }
     } 
+    
 }
 catch(e){
     console.error('ERROR', e)
