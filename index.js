@@ -11,6 +11,7 @@ let worldCupTeams = [];
 const groups = [];
 let playOffTeams = [];
 const config = { rounds: 1, eresPatriota: true };
+// Esta variable eresPatriota mostrará tu verdadero amor por la madre patria...
 console.clear();
 
 let dev = false;
