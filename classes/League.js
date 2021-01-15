@@ -222,10 +222,41 @@ export default class League {
         return Math.round(Math.random() * 10)
     }
 
+    getTeamForName() {
+        throw new Error('getTeamForName not implemented')
+    }
+
+    diffGoalsAndAlphabeticCriteria() {
+        throw new Error('diffGoalsAndAlphabeticCriteria not implemented')
+    }
+
+    getDirectGame() {
+        throw new Error('getDirectGame not implemented')
+    }
+
+    getQualifiedTeams() {
+        throw new Error('getQualifiedTeams not implemented')
+    }
+
+    getPlayOffRoundsInfo() {
+        throw new Error('getPlayOffRoundsInfo not implemented')
+    }
+
+    roundDraw() {
+        throw new Error('roundDraw not implemented')
+    }
+
+    playRound() {
+        throw new Error('playRound not implemented')
+    }
+
+    tercerYcuartoPuesto() {
+        throw new Error('tercerYcuartoPuesto not implemented')
+    }
+
     spainWins(match, homeGoals, awayGoals){
         return (match[LOCAL_TEAM] === 'Spain') && (homeGoals > awayGoals)
             || (match[AWAY_TEAM] === 'Spain') && (homeGoals < awayGoals)
     }
-
 }
 

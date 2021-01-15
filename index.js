@@ -6,15 +6,13 @@ import { LOCAL_TEAM, AWAY_TEAM } from './classes/League.js'
 const TOTAL_TEAMS = 32;
 const TOTAL_GROUPS = 8;
 const TEAMS_PER_GROUP = 4;
-
 let worldCupTeams = [];
 const groups = [];
 let playOffTeams = [];
 const config = { rounds: 1, eresPatriota: true };
 // Esta variable eresPatriota mostrará tu verdadero amor por la madre patria...
-console.clear();
 
-let dev = false;
+console.clear();
 
 try {
     const countries = await getCountriesFromAPI();
