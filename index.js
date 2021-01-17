@@ -86,10 +86,7 @@ try {
             }))
             i++;
         })
-        // ===========================
-        group.getStandings();
-        // ===========================
-
+        
         // Mostramos los acumulados (goles y puntos)
         const initialAccumulator = { totalGoals: 0, totalPoints: 0 }
         const totals = group.teams.reduce(function(accumulator, team) {
@@ -104,9 +101,6 @@ try {
 
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
     })
-
-    let dev = false;
-    if (dev){
 
     console.log('===============================================');
     console.log('---------------- PLAYOFFS START ---------------');
@@ -134,9 +128,6 @@ try {
             console.log(`---> ${winners.map(team => team.toUpperCase())} <--- IS THE NEW WORLD CHAMPION!!!`);
         }
     } 
-
-    // Cierre del dev
-    }
     
 }
 catch(e){
