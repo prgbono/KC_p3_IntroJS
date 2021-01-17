@@ -88,36 +88,27 @@ export default class PointsBasedLeague extends League {
         4. In case of drawn in the previous, alphabetic order.
     */
     getStandings() {
-    //FIXME: Doesn't work properly in case of more than 2 teams drawn      
-    // Sacar el array de puntos de todos los equipos del gruop. Si no hay triple o cuádriple empate
-    // seguir con este método, si lo hay ordenar con otro método que tendrá en cuenta la diff de goles porque no 
-    // se puede dar el caso de que en la liguilla algún equipo tenga más victorias que otro!! Confirmar esto!!
-        let groupPoints =[];
-        this.teams.map(team => groupPoints.push(team.points));
-        console.log('SSSSS groupPoints: ',groupPoints);
+        let moreThan2TeamsTiedOnPoints = false;
+        const groupPoints = this.teams.map(team => team.points);
 
-        let teamsTiedOnPoints = [];
         let acc = [];
         let cont;
+        /* acc es un array que indica cuántas veces tiene un equipo x puntos. 
+            Para esta clasificación:
+                1. 5pts
+                2. 3pts
+                3. 3pts
+                4. 1pto
+            acc = [1, 2, 2, 1] - 1 equipo con 5pts, 2 con 3, 2 con 3, 1 con 1 */
         acc = groupPoints.map(points => {
             cont = 0;
             for (let i=0; i<groupPoints.length; i++){
                 if (points === groupPoints[i]) cont++
             }
             return cont;
-            // teamsTiedOnPoints = groupPoints.map(otherPoints => {
-            //     cont = 0;
-            //     if (points === otherPoints) cont++;
-            //     // return cont;
-            // })
-
-            // acc = teamsTiedOnPoints.reduce((acc, val) => {
-            //         acc += val;
-            //         return acc
-            //     }, 0)
-            // return acc;
         })
-        console.log('SSSSS acc: ',acc);
+
+        if (acc.includes(3) || acc.includes(4)) moreThan2TeamsTiedOnPoints = true;
 
         this.teams.sort((teamA, teamB) => {
             if (teamA.points > teamB.points) {
@@ -126,29 +117,34 @@ export default class PointsBasedLeague extends League {
                 return 1
             } 
             else {
-                let directGame = this.getDirectGame(teamA, teamB, this.summaries);
-                if (directGame.length == 1){ //Se ha jugado enfrentamiento directo
-                    directGame = directGame[0];
-                    if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals > directGame.awayGoals)){
-                        return -1; 
+                if (moreThan2TeamsTiedOnPoints) {
+                    return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
+                }
+                else {
+                    let directGame = this.getDirectGame(teamA, teamB, this.summaries);
+                    if (directGame.length == 1){ //Se ha jugado enfrentamiento directo
+                        directGame = directGame[0];
+                        if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals > directGame.awayGoals)){
+                            return -1; 
+                        }
+                        else if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals < directGame.awayGoals)) { 
+                            return 1;
+                        }
+                        else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals > directGame.awayGoals)) {
+                            return 1;
+                        }
+                        else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals < directGame.awayGoals)) {
+                            return -1;
+                        }
+                        //Hay que contemplar el caso que se haya jugado el enfrentamiento directo y continúen igual de empatados
+                        else {
+                            return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
+                        }
                     }
-                    else if ((directGame.homeTeam == teamA.name) && (directGame.homeGoals < directGame.awayGoals)) { 
-                        return 1;
-                    }
-                    else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals > directGame.awayGoals)) {
-                        return 1;
-                    }
-                    else if ((directGame.homeTeam == teamB.name) && (directGame.homeGoals < directGame.awayGoals)) {
-                        return -1;
-                    }
-                    //Hay que contemplar el caso que se haya jugado el enfrentamiento directo y continúen igual de empatados
+                    // caso que no se haya jugado el enfrentaminto directo
                     else {
                         return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
                     }
-                }
-                // caso que no se haya jugado el enfrentaminto directo
-                else {
-                    return (this.diffGoalsAndAlphabeticCriteria(teamA, teamB))
                 }
             }
         })
