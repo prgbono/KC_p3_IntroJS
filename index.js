@@ -9,7 +9,7 @@ const TEAMS_PER_GROUP = 4;
 let worldCupTeams = [];
 const groups = [];
 let playOffTeams = [];
-const config = { rounds: 1, eresPatriota: true };
+const config = { rounds: 1, eresPatriota: false };
 // Esta variable eresPatriota mostrará tu verdadero amor por la madre patria...
 
 console.clear();
@@ -86,6 +86,9 @@ try {
             }))
             i++;
         })
+        // ===========================
+        group.getStandings();
+        // ===========================
 
         // Mostramos los acumulados (goles y puntos)
         const initialAccumulator = { totalGoals: 0, totalPoints: 0 }
@@ -102,6 +105,8 @@ try {
         playOffTeams = playOffTeams.concat(group.getQualifiedTeams());
     })
 
+    let dev = false;
+    if (dev){
 
     console.log('===============================================');
     console.log('---------------- PLAYOFFS START ---------------');
@@ -129,6 +134,9 @@ try {
             console.log(`---> ${winners.map(team => team.toUpperCase())} <--- IS THE NEW WORLD CHAMPION!!!`);
         }
     } 
+
+    // Cierre del dev
+    }
     
 }
 catch(e){

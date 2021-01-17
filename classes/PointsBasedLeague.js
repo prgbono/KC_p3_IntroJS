@@ -87,8 +87,38 @@ export default class PointsBasedLeague extends League {
         3. Drawn in previous step. See goals diff.
         4. In case of drawn in the previous, alphabetic order.
     */
-    //FIXME: Doesn't work properly in case of more than 2 teams drawn      
     getStandings() {
+    //FIXME: Doesn't work properly in case of more than 2 teams drawn      
+    // Sacar el array de puntos de todos los equipos del gruop. Si no hay triple o cuádriple empate
+    // seguir con este método, si lo hay ordenar con otro método que tendrá en cuenta la diff de goles porque no 
+    // se puede dar el caso de que en la liguilla algún equipo tenga más victorias que otro!! Confirmar esto!!
+        let groupPoints =[];
+        this.teams.map(team => groupPoints.push(team.points));
+        console.log('SSSSS groupPoints: ',groupPoints);
+
+        let teamsTiedOnPoints = [];
+        let acc = [];
+        let cont;
+        acc = groupPoints.map(points => {
+            cont = 0;
+            for (let i=0; i<groupPoints.length; i++){
+                if (points === groupPoints[i]) cont++
+            }
+            return cont;
+            // teamsTiedOnPoints = groupPoints.map(otherPoints => {
+            //     cont = 0;
+            //     if (points === otherPoints) cont++;
+            //     // return cont;
+            // })
+
+            // acc = teamsTiedOnPoints.reduce((acc, val) => {
+            //         acc += val;
+            //         return acc
+            //     }, 0)
+            // return acc;
+        })
+        console.log('SSSSS acc: ',acc);
+
         this.teams.sort((teamA, teamB) => {
             if (teamA.points > teamB.points) {
                 return -1
